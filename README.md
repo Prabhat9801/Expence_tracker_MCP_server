@@ -7,25 +7,41 @@ A comprehensive Model Context Protocol (MCP) server for tracking and analyzing p
 
 ## 🌟 Features
 
-### Core Expense Management
+### 💳 Core Expense Management
 - ✅ **Add Expense** - Record new expenses with date, amount, category, subcategory, and notes
+- ✅ **Update Expense** - Modify existing expense entries
+- ✅ **Delete Expense** - Remove expense entries by ID
+- ✅ **Get Expense** - Retrieve specific expense details
 - ✅ **List Expenses** - View expenses within date ranges
-- ✅ **Delete Expense** - Remove expense entries
-- ✅ **Search Expenses** - Find expenses by content across categories, subcategories, and notes
-- ✅ **Get Expense Statistics** - Comprehensive statistics with min/max/average analysis
-- ✅ **Monthly Summary** - Get detailed monthly expense breakdowns
+- ✅ **Bulk Add** - Add multiple expenses at once
+- ✅ **Search Expenses** - Find expenses by keywords across all fields
 
-### Analytics & Insights
-- 📊 **Spending Statistics** - Total transactions, amounts, averages with category breakdowns
-- 📈 **Monthly Analysis** - Detailed monthly spending analysis by category
-- 🔍 **Search & Filter** - Advanced search across all expense fields
-- 📊 **Category Summaries** - Spending summaries grouped by categories
-- 📅 **Date Range Analysis** - Flexible date-based expense analysis
+### 📊 Analytics & Insights
+- � **Spending Statistics** - Comprehensive stats with min/max/average analysis
+- � **Monthly Analysis** - Detailed monthly spending breakdowns by category
+- � **Category Trends** - Track spending patterns over time (daily/weekly/monthly)
+- 🔝 **Top Expenses** - Identify highest spending transactions
+- 📅 **Date Range Analysis** - Flexible period-based expense analysis
+- � **Category Summaries** - Spending summaries grouped by categories
 
-### Data Management
-- 📋 **Category Management** - Predefined expense categories for consistency
+### 💰 Budget Management
+- 🎯 **Create Budgets** - Set spending limits by category (monthly/weekly/yearly)
+- � **Budget Tracking** - Monitor actual spending vs budgets
+- ⚠️ **Budget Alerts** - Get status warnings when approaching limits
+- 📈 **Budget Analysis** - Percentage usage and remaining amounts
+- ✏️ **Update Budgets** - Modify existing budget parameters
+
+### 🔄 Recurring Expenses
+- 📅 **Add Recurring** - Track subscriptions and recurring payments
+- 🔔 **Due Notifications** - Get upcoming payment reminders
+- ⚡ **Auto Processing** - Convert recurring expenses to actual expenses
+- 📝 **Manage Subscriptions** - Full lifecycle management of recurring costs
+
+### 📥 Data Management
+- 📤 **CSV Export** - Export expense data for external analysis
+- 📋 **Category Management** - Comprehensive predefined expense categories
 - 🏥 **Health Monitoring** - Server health check and status monitoring
-- 💾 **Cloud Storage** - Expenses stored securely in cloud database
+- 💾 **Cloud Storage** - Secure cloud database with persistence
 - 🔄 **Real-time Updates** - Instant expense tracking and retrieval
 
 ## 🚀 Quick Start
@@ -56,7 +72,7 @@ Connect your MCP client to the server URL above to start tracking expenses immed
 
 ## 📚 Available Tools
 
-### Core Operations
+### 🎯 Core Operations
 
 #### `add_expense`
 Add a new expense entry to the database.
@@ -79,6 +95,16 @@ List expenses within a date range.
 }
 ```
 
+#### `update_expense`
+Update an existing expense entry.
+```json
+{
+  "expense_id": 123,
+  "amount": 30.00,
+  "note": "Updated amount"
+}
+```
+
 #### `delete_expense`
 Remove an expense by ID.
 ```json
@@ -87,17 +113,57 @@ Remove an expense by ID.
 }
 ```
 
-#### `search_expenses`
-Search expenses by query across categories, subcategories, and notes.
+#### `get_expense_by_id`
+Get a specific expense by its ID.
 ```json
 {
-  "query": "coffee",
+  "expense_id": 123
+}
+```
+
+### 🔍 Search & Analysis Tools
+
+#### `search_expenses`
+Search expenses by keyword across categories, subcategories, and notes.
+```json
+{
+  "keyword": "coffee",
   "start_date": "2024-10-01",
   "end_date": "2024-10-31"
 }
 ```
 
-### Analytics Tools
+#### `get_top_expenses`
+Get the highest expenses within a date range.
+```json
+{
+  "start_date": "2024-10-01",
+  "end_date": "2024-10-31",
+  "limit": 10
+}
+```
+
+#### `get_expense_statistics`
+Comprehensive spending statistics and category breakdowns.
+```json
+{
+  "start_date": "2024-01-01",
+  "end_date": "2024-12-31"
+}
+```
+
+#### `get_category_trends`
+Track spending trends for a specific category over time.
+```json
+{
+  "category": "Food & Dining",
+  "start_date": "2024-01-01",
+  "end_date": "2024-12-31",
+  "group_by": "month"
+}
+```
+
+### 📊 Summary & Analytics
 
 #### `summarize`
 Get expense summaries by category for a date range.
@@ -118,27 +184,115 @@ Get detailed monthly expense analysis.
 }
 ```
 
-#### `get_expense_statistics`
-Comprehensive spending statistics and category breakdowns.
+### 💰 Budget Management
+
+#### `create_budget`
+Create a budget for a specific category.
+```json
+{
+  "category": "Food & Dining",
+  "amount": 500.00,
+  "period": "monthly",
+  "start_date": "2024-10-01"
+}
+```
+
+#### `get_budgets`
+List all budgets (active or all).
+```json
+{
+  "active_only": true
+}
+```
+
+#### `check_budget_status`
+Check budget vs actual spending.
+```json
+{
+  "start_date": "2024-10-01",
+  "end_date": "2024-10-31"
+}
+```
+
+#### `update_budget`
+Update an existing budget.
+```json
+{
+  "budget_id": 1,
+  "amount": 600.00,
+  "is_active": true
+}
+```
+
+### 🔄 Recurring Expenses
+
+#### `add_recurring_expense`
+Add a recurring expense (subscriptions, etc.).
+```json
+{
+  "name": "Netflix Subscription",
+  "amount": 15.99,
+  "category": "Entertainment",
+  "frequency": "monthly",
+  "next_due_date": "2024-11-01"
+}
+```
+
+#### `get_recurring_expenses`
+List all recurring expenses.
+```json
+{
+  "active_only": true
+}
+```
+
+#### `get_due_recurring_expenses`
+Get recurring expenses due within specified days.
+```json
+{
+  "days_ahead": 7
+}
+```
+
+#### `process_recurring_expense`
+Process a recurring expense (add to expenses and update next due date).
+```json
+{
+  "recurring_id": 1,
+  "process_date": "2024-10-25"
+}
+```
+
+### 📥 Bulk Operations
+
+#### `bulk_add_expenses`
+Add multiple expenses at once.
+```json
+{
+  "expenses": [
+    {
+      "date": "2024-10-25",
+      "amount": 12.99,
+      "category": "Food & Dining",
+      "note": "Lunch"
+    },
+    {
+      "date": "2024-10-25",
+      "amount": 3.50,
+      "category": "Transportation",
+      "note": "Bus fare"
+    }
+  ]
+}
+```
+
+#### `export_expenses_csv`
+Export expenses to CSV format.
 ```json
 {
   "start_date": "2024-01-01",
   "end_date": "2024-12-31"
 }
-```
-
-### Utility Tools
-
-#### `get_categories`
-Get available expense categories.
-```json
-{}
-```
-
-#### `health_check`
-Check server status and health.
-```json
-{}
 ```
 
 ## 📊 Expense Categories
@@ -176,54 +330,390 @@ The system includes comprehensive expense categories:
 
 ## 📝 Usage Examples
 
-### Adding Your First Expense
+### 💰 Basic Expense Operations
+
+**Adding Your First Expense:**
 ```json
 {
-  "date": "2024-10-25",
+  "date": "2025-10-25",
   "amount": 12.99,
-  "category": "Food & Dining",
-  "subcategory": "Lunch",
-  "note": "Subway sandwich"
+  "category": "food",
+  "subcategory": "dining_out",
+  "note": "Subway sandwich for lunch"
 }
 ```
 
-### Monthly Spending Analysis
+**Updating an Expense:**
 ```json
 {
-  "year": 2024,
+  "expense_id": 123,
+  "amount": 15.99,
+  "note": "Updated: Actually got a combo meal"
+}
+```
+
+**Searching for Expenses:**
+```json
+{
+  "keyword": "coffee",
+  "start_date": "2025-10-01",
+  "end_date": "2025-10-31"
+}
+```
+
+### 📊 Analytics & Reporting
+
+**Monthly Spending Analysis:**
+```json
+{
+  "year": 2025,
   "month": 10
 }
 ```
 
-### Search for Coffee Expenses
+**Category Spending Trends:**
 ```json
 {
-  "query": "coffee",
-  "start_date": "2024-10-01",
-  "end_date": "2024-10-31"
+  "category": "food",
+  "start_date": "2025-01-01",
+  "end_date": "2025-12-31",
+  "group_by": "month"
 }
 ```
 
-### Get Overall Statistics
+**Get Top Expenses:**
 ```json
 {
-  "start_date": "2024-01-01",
-  "end_date": "2024-12-31"
+  "start_date": "2025-10-01",
+  "end_date": "2025-10-31",
+  "limit": 5
 }
 ```
+
+**Overall Statistics:**
+```json
+{
+  "start_date": "2025-01-01",
+  "end_date": "2025-12-31"
+}
+```
+
+### 💰 Budget Management
+
+**Create a Monthly Budget:**
+```json
+{
+  "category": "food",
+  "amount": 500.00,
+  "period": "monthly",
+  "start_date": "2025-10-01"
+}
+```
+
+**Check Budget Status:**
+```json
+{
+  "start_date": "2025-10-01",
+  "end_date": "2025-10-31"
+}
+```
+
+### 🔄 Recurring Expenses
+
+**Add a Subscription:**
+```json
+{
+  "name": "Netflix Subscription",
+  "amount": 15.99,
+  "category": "entertainment",
+  "subcategory": "streaming_subscriptions",
+  "frequency": "monthly",
+  "next_due_date": "2025-11-01"
+}
+```
+
+**Check Upcoming Bills:**
+```json
+{
+  "days_ahead": 7
+}
+```
+
+### 📤 Bulk Operations
+
+**Add Multiple Expenses:**
+```json
+{
+  "expenses": [
+    {
+      "date": "2025-10-25",
+      "amount": 4.50,
+      "category": "food",
+      "subcategory": "coffee_tea",
+      "note": "Morning coffee"
+    },
+    {
+      "date": "2025-10-25",
+      "amount": 12.99,
+      "category": "food",
+      "subcategory": "dining_out",
+      "note": "Lunch"
+    },
+    {
+      "date": "2025-10-25",
+      "amount": 2.50,
+      "category": "transport",
+      "subcategory": "public_transport",
+      "note": "Bus fare"
+    }
+  ]
+}
+```
+
+**Export to CSV:**
+```json
+{
+  "start_date": "2025-01-01",
+  "end_date": "2025-12-31"
+}
+```
+
+### 💬 Claude Desktop Commands
+
+Once integrated with Claude Desktop, you can use natural language:
+
+**Adding Expenses:**
+- "Add a $25 expense for groceries today"
+- "Record $4.50 for coffee this morning under food category"
+- "I spent $89.99 on a new shirt yesterday, put it under shopping"
+
+**Budget Management:**
+- "Set a $500 monthly budget for food expenses"
+- "How am I doing against my budget this month?"
+- "Show me budget status for all categories"
+
+**Analytics:**
+- "What's my total spending this month?"
+- "Show me my top 10 expenses from last month"
+- "How much did I spend on food in 2025?"
+- "What are my spending trends for transportation?"
+
+**Recurring Expenses:**
+- "Add Netflix subscription for $15.99 monthly due on the 1st"
+- "What bills are due this week?"
+- "Process my Netflix payment for this month"
+
+**Search & Analysis:**
+- "Find all coffee-related expenses from October"
+- "Search for any Uber or taxi expenses"
+- "Show me restaurant expenses over $50"
 
 ## 🔧 Integration
 
-### MCP Client Setup
-1. **Configure your MCP client** to connect to: `https://prabhatmcp.fastmcp.app/mcp`
-2. **Test connection** using the `health_check` tool
-3. **Start tracking** expenses with the `add_expense` tool
+### 🤖 Claude AI Desktop Integration
 
-### Supported Clients
-- Claude Desktop
-- Continue.dev
-- Custom MCP implementations
-- Any MCP-compatible client
+#### Step-by-Step Setup
+
+1. **Install Claude Desktop**
+   - Download from [Claude.ai](https://claude.ai/download)
+   - Complete the installation process
+
+2. **Locate Configuration File**
+   
+   **Windows:**
+   ```
+   %APPDATA%\Claude\claude_desktop_config.json
+   ```
+   
+   **macOS:**
+   ```
+   ~/Library/Application Support/Claude/claude_desktop_config.json
+   ```
+   
+   **Linux:**
+   ```
+   ~/.config/Claude/claude_desktop_config.json
+   ```
+
+3. **Add MCP Server Configuration**
+   
+   Open the `claude_desktop_config.json` file and add:
+   
+   ```json
+   {
+     "mcpServers": {
+       "expense-tracker": {
+         "command": "fastmcp",
+         "args": ["run", "main.py"],
+         "cwd": "/path/to/your/Expence_tracker_MCP_server"
+       }
+     }
+   }
+   ```
+   
+   **For HTTP connection (using deployed server):**
+   ```json
+   {
+     "mcpServers": {
+       "expense-tracker-cloud": {
+         "command": "curl",
+         "args": ["-X", "POST", "https://prabhatmcp.fastmcp.app/mcp"]
+       }
+     }
+   }
+   ```
+
+4. **Restart Claude Desktop**
+   - Close Claude Desktop completely
+   - Restart the application
+   - The expense tracker should appear in the MCP servers list
+
+#### Using with Claude Desktop
+
+Once configured, you can:
+
+**Add Expenses:**
+```
+Claude, add an expense for $15.99 for lunch at McDonald's today under Food & Dining category.
+```
+
+**View Monthly Summary:**
+```
+Claude, show me my expense summary for October 2025.
+```
+
+**Search Expenses:**
+```
+Claude, find all my coffee-related expenses from last month.
+```
+
+**Get Statistics:**
+```
+Claude, what are my spending statistics for this year?
+```
+
+### 🛠️ Alternative MCP Clients
+
+#### Continue.dev Integration
+
+1. **Install Continue Extension** in VS Code
+2. **Configure in settings.json:**
+   ```json
+   {
+     "continue.mcpServers": [
+       {
+         "name": "expense-tracker",
+         "serverPath": "/path/to/fastmcp",
+         "args": ["run", "main.py"],
+         "cwd": "/path/to/Expence_tracker_MCP_server"
+       }
+     ]
+   }
+   ```
+
+#### Custom MCP Client
+
+For custom implementations:
+
+```python
+from mcp import Client
+import asyncio
+
+async def connect_to_expense_tracker():
+    client = Client()
+    await client.connect("https://prabhatmcp.fastmcp.app/mcp")
+    
+    # Add an expense
+    result = await client.call_tool("add_expense", {
+        "date": "2025-10-25",
+        "amount": 25.99,
+        "category": "Food & Dining",
+        "note": "Dinner"
+    })
+    print(result)
+
+asyncio.run(connect_to_expense_tracker())
+```
+
+### 🌐 HTTP API Integration
+
+You can also integrate directly via HTTP:
+
+```bash
+curl -X POST https://prabhatmcp.fastmcp.app/mcp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tool": "add_expense",
+    "parameters": {
+      "date": "2025-10-25",
+      "amount": 25.99,
+      "category": "Food & Dining",
+      "note": "Dinner"
+    }
+  }'
+```
+
+### 📱 Third-Party Integrations
+
+#### Zapier Integration
+Connect with Zapier to automatically track expenses from:
+- 💳 Bank transactions
+- 📧 Email receipts
+- 📊 Spreadsheet updates
+
+#### IFTTT Integration
+Set up triggers for:
+- 📱 Location-based expense tracking
+- 📧 Receipt email processing
+- 📅 Scheduled recurring expenses
+
+### ✅ Verification Steps
+
+After setup, verify integration:
+
+1. **Test Connection:**
+   - Ask Claude: "Check the health of the expense tracker"
+   - Should receive server status
+
+2. **Add Test Expense:**
+   - "Add a $5 test expense for today"
+   - Verify successful addition
+
+3. **List Expenses:**
+   - "Show me expenses from today"
+   - Should see the test expense
+
+### 🚨 Troubleshooting Integration
+
+#### Common Claude Desktop Issues:
+
+**Server Not Appearing:**
+- Check JSON syntax in config file
+- Verify file path is correct
+- Restart Claude Desktop
+
+**Connection Errors:**
+- Ensure server is running
+- Check network connectivity
+- Verify URL accessibility
+
+**Tool Not Working:**
+- Test with health_check tool first
+- Check parameter formats
+- Review error messages
+
+#### Debug Commands:
+
+```bash
+# Test local server
+uv run python main.py
+
+# Test with fastmcp
+uv run fastmcp dev main.py
+
+# Verify server health
+curl https://prabhatmcp.fastmcp.app/mcp/health
+```
 
 ## 📈 Data Analysis Capabilities
 
@@ -277,15 +767,30 @@ All tools return structured JSON responses:
 - Check tool documentation for required parameters
 - Ensure JSON format is valid for tool calls
 
-## 🚀 Future Enhancements
+## 🚀 Current Version: 2.0
+
+### ✅ Recently Added Features (v2.0)
+- ✅ **Advanced Budget Management** - Set, track, and monitor spending budgets
+- ✅ **Recurring Expense Tracking** - Manage subscriptions and recurring payments
+- ✅ **Bulk Operations** - Add multiple expenses and export data
+- ✅ **Enhanced Analytics** - Category trends, top expenses, comprehensive statistics
+- ✅ **CRUD Operations** - Full create, read, update, delete functionality
+- ✅ **Advanced Search** - Keyword search across all expense fields
+- ✅ **CSV Export** - Export expense data for external analysis
+
+### 🔮 Future Enhancements (v3.0 Roadmap)
 
 Planned features for upcoming versions:
-- 📊 Advanced analytics and visualizations
-- 💰 Budget tracking and alerts
-- 📤 CSV import/export capabilities
-- 🔄 Recurring expense detection
-- 📱 Mobile-friendly interfaces
-- 🎯 Spending goals and targets
+- 📊 **Interactive Dashboards** - Visual charts and graphs in Claude Desktop
+- 🎯 **Smart Categorization** - AI-powered expense category suggestions
+- 📧 **Receipt Processing** - Extract expense data from receipt images
+- 🔔 **Advanced Notifications** - Custom alerts and spending warnings
+- 📱 **Mobile App** - Dedicated mobile interface
+- 🌍 **Multi-Currency Support** - Handle expenses in different currencies
+- 👥 **Shared Budgets** - Family/team expense tracking
+- 🤖 **Spending Insights** - AI-powered spending pattern analysis
+- 📊 **Financial Goals** - Savings targets and progress tracking
+- 🔗 **Bank Integration** - Connect to bank accounts for automatic tracking
 
 ## 📄 API Documentation
 
